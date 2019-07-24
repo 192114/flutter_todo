@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
-import 'package:flutter_todo/config/application.dart';
 import 'package:flutter_todo/component/todo_card.dart';
 import 'package:flutter_todo/component/home_header.dart';
+import 'package:flutter_todo/config/navigator_util.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,7 +10,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  
+  Future _navigateToAddNew(BuildContext context) async{
+    var result = await NavigatorUtil.goAddNew(context);
+    print(result);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class _HomeState extends State<Home> {
                 flex: 1,
                 child: RefreshIndicator(
                   onRefresh: (){
-                    Application.router.navigateTo(context, '/addNew', transition: TransitionType.fadeIn);
+                    return _navigateToAddNew(context);
                   },
                   child: ListView.builder(
                     itemCount: 2,

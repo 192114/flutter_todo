@@ -20,7 +20,6 @@ class Main extends StatelessWidget {
       theme: ThemeData.light(),
       onGenerateRoute: Application.router.generator,
     );
-    print("initial route = ${app.initialRoute}");
     return app;
   }
 }
