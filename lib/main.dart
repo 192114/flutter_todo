@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:fluro/fluro.dart';
+import 'package:flutter_todo/config/application.dart';
+import 'package:flutter_todo/config/routes.dart';
+
+void main() {
+   // 注册 fluro routes
+  Router router = Router();
+  Routes.configureRoutes(router);
+  Application.router = router;
+
+  runApp(Main());
+}
+
+class Main extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final app = MaterialApp(
+      title: 'TODO',
+      theme: ThemeData.light(),
+      onGenerateRoute: Application.router.generator,
+    );
+    print("initial route = ${app.initialRoute}");
+    return app;
+  }
+}
