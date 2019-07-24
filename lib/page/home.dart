@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
                 flex: 1,
                 child: RefreshIndicator(
                   onRefresh: (){
-                    Application.router.navigateTo(context, "/addNew", transition: TransitionType.fadeIn);
+                    Application.router.navigateTo(context, '/addNew', transition: TransitionType.fadeIn);
                   },
                   child: ListView.builder(
                     itemCount: 2,
