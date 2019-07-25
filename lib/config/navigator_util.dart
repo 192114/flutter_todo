@@ -4,6 +4,6 @@ import 'package:flutter_todo/config/application.dart';
 
 class NavigatorUtil {
   static Future goAddNew(BuildContext context) {
-    return Application.router.navigateTo(context, '/addNew', transition: TransitionType.inFromBottom);
+    return Application.router.navigateTo(context, '/addNew', transition: TransitionType.fadeIn);
   }
 }
