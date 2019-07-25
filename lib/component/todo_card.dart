@@ -40,7 +40,7 @@ class _ToDoCardState extends State<ToDoCard> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: Text('111'),
+                            child: Text('超过一等奖立法近似等级的离开家老大姐法律界啊反抗军克里斯将领卡点就离开家会计法'),
                             flex: 1,
                           ),
                           Checkbox(

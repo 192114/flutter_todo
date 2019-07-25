@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
                     return _navigateToAddNew(context);
                   },
                   child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: 12,
                     itemBuilder: (BuildContext context, int index) {
                       return ToDoCard(currentIndex: index);
                     },
