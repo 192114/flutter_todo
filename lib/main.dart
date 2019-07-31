@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter_todo/config/application.dart';
 import 'package:flutter_todo/config/routes.dart';
-import 'package:sqflite/sqflite.dart';
-
-// https://github.com/xinwii/flutter_sqlite_demo
 
 void main() {
    // 注册 fluro routes
