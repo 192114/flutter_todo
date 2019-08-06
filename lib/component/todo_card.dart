@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo/modal/db_helper.dart';
+import 'package:flutter_todo/modal/todo.dart';
 
 class ToDoCard extends StatefulWidget {
   int currentIndex;
+  var currentToDo;
 
-  ToDoCard({Key key, this.currentIndex}) : super(key: key);
+  ToDoCard({Key key, this.currentIndex, this.currentToDo}) : super(key: key);
 
   @override
   _ToDoCardState createState() => _ToDoCardState();
 }
 
 class _ToDoCardState extends State<ToDoCard> {
+  var db = DatabaseHelper();
+
   bool _checkboxSelected = true; //维护复选框状态
   int currentIndex;
   double cardPadding;
@@ -18,7 +23,18 @@ class _ToDoCardState extends State<ToDoCard> {
   void initState() {
     currentIndex = widget.currentIndex;
     cardPadding = currentIndex == 0 ? 10.0 : 30.0;
+    _checkboxSelected = widget.currentToDo.done == '1';
     super.initState();
+  }
+
+  updateItem(value) async {
+    var todo = ToDo(
+      id: widget.currentToDo.id,
+      name: widget.currentToDo.name,
+      type: widget.currentToDo.type,
+      done: value ? '1' : '0',
+    );
+    await db.updateItem(todo);
   }
 
   @override
@@ -40,7 +56,7 @@ class _ToDoCardState extends State<ToDoCard> {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: Text('超过一等奖立法近似等级的离开家老大姐法律界啊反抗军克里斯将领卡点就离开家会计法'),
+                            child: Text(widget.currentToDo.name),
                             flex: 1,
                           ),
                           Checkbox(
@@ -48,22 +64,7 @@ class _ToDoCardState extends State<ToDoCard> {
                               activeColor: Colors.grey, //选中时的颜色
                               onChanged: (value) {
                                 setState(() {
-                                  _checkboxSelected = value;
-                                });
-                              })
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Text('111'),
-                            flex: 1,
-                          ),
-                          Checkbox(
-                              value: _checkboxSelected,
-                              activeColor: Colors.red, //选中时的颜色
-                              onChanged: (value) {
-                                setState(() {
+                                  updateItem(value);
                                   _checkboxSelected = value;
                                 });
                               })

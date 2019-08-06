@@ -1,8 +1,8 @@
 class ToDo {
-  final int id;
-  final String name;
-  final String type;
-  final String done;
+  int id;
+  String name;
+  String type;
+  String done;
 
   ToDo({this.id, this.name, this.type, this.done});
 
@@ -15,9 +15,15 @@ class ToDo {
     };
   }
 
-  // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
-  // 重写 toString 方法，以便使用 print 方法查看每个狗狗信息的时候能更清晰。
+  static ToDo fromMap(Map<String, dynamic> map) {
+    ToDo user = new ToDo();
+    user.name = map['name'];
+    user.type = map['type'];
+    user.done = map['done'];
+    user.id = map['id'];
+    return user;
+  }
+
   @override
   String toString() {
     return 'ToDo{id: $id, name: $name, type: $type, done: $done}';

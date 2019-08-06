@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_todo/utils/utils.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:flutter_todo/modal/db_helper.dart';
 import 'package:flutter_todo/modal/todo.dart';
-import 'package:path/path.dart';
 
 class AddNew extends StatefulWidget {
   @override
@@ -15,49 +13,20 @@ class _AddNewState extends State<AddNew> {
   String _currentCategory = 'To Do';
   bool _checkboxSelected = false;
 
-  Future<void> insertDog(ToDo todo) async {
-    final database = openDatabase(
-      // Set the path to the database. Note: Using the `join` function from the
-      // `path` package is best practice to ensure the path is correctly
-      // constructed for each platform.
-      // 设置数据库的路径。注意：使用 `path` 包中的 `join` 方法是
-      // 确保在多平台上路径都正确的最佳实践。
-      join(await getDatabasesPath(), 'todos_database.db'),
-      // When the database is first created, create a table to store dogs.
-      // 当数据库第一次被创建的时候，创建一个数据表，用以存储狗狗们的数据。
-      onCreate: (db, version) {
-        return db.execute(
-          "CREATE TABLE todos(id INTEGER PRIMARY KEY, name TEXT, type TEXT ,done TEXT)",
-        );
-      },
-      // Set the version. This executes the onCreate function and provides a
-      // path to perform database upgrades and downgrades.
-      // 设置版本。它将执行 onCreate 方法，同时提供数据库升级和降级的路径。
-      version: 1,
-    );
-    // Get a reference to the database (获得数据库引用)
-    final Database db = await database;
-
-    // Insert the Dog into the correct table. Also specify the
-    // `conflictAlgorithm`. In this case, if the same dog is inserted
-    // multiple times, it replaces the previous data.
-    // 在正确的数据表里插入狗狗的数据。我们也要在这个操作中指定 `conflictAlgorithm` 策略。
-    // 如果同样的狗狗数据被多次插入，后一次插入的数据将会覆盖之前的数据。
-    await db.insert(
-      'todos',
-      todo.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
+  var db = DatabaseHelper();
 
   submitTodos(context) async {
+    String name = _newToDoController.text;
+    String type = _currentCategory;
+    int totalLength = await db.getCount();
     var todo = ToDo(
-      id: 0,
-      name: '测试',
-      type: 'ToDo',
-      done: '11',
+      id: totalLength,
+      name: name,
+      type: type,
+      done: '0',
     );
-    await insertDog(todo);
+
+    await db.saveItem(todo);
     Navigator.of(context).pop();
   }
 
